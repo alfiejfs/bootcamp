@@ -13,26 +13,21 @@ def get_data():
         return [line.strip() for line in file]
 
 def get_next_instruction(last_instruction, data):
-    if last_instruction == -1:
-        return 0
+    split = data[last_instruction - 1].rstrip().split(" ")
+    if split[1] == "calc":
+        return int(calc(split[2], int(split[3]), int(split[4])))
     else:
-        split = data[last_instruction + 1].rstrip().split(" ")
-        if split[1] == "calc":
-            return int(calc(split[2], int(split[3]), int(split[4])))
-        else:
-            return int(split[1])
+        return int(split[1])
 
 def run():
     seen = []
     data = get_data()
-    instruction = get_next_instruction(-1, data)
+    instruction = 1
     while data[instruction] not in seen:
-        print("Executing instruction " + data[instruction] + " on line " + str(instruction))
         seen.append(data[instruction])
         instruction = get_next_instruction(instruction, data)
-        print(instruction, data[instruction])
 
-    print("Instruction: " + data[instruction])
+    print("Instruction: " + data[instruction - 1])
     print("Line: " + str(instruction))
 
 
