@@ -23,8 +23,8 @@ def run():
     seen = []
     data = get_data()
     instruction = 1
-    while data[instruction] not in seen:
-        seen.append(data[instruction])
+    while data[instruction - 1] not in seen:
+        seen.append(data[instruction - 1])
         instruction = get_next_instruction(instruction, data)
 
     print("Instruction: " + data[instruction - 1])

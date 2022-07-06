@@ -20,13 +20,17 @@ def get_next_instruction(last_instruction, data):
         else:
             return int(split[1])
     elif split[0] == "remove":
-        index = int(split[1])
+        index = int(split[1]) - 1
         if len(data) > index:
-            del data[int(split[1])]
-        return last_instruction + 1
+            del data[index]
+
+        if index > last_instruction:
+            return last_instruction + 1
+        else:
+            return last_instruction
     elif split[0] == "replace":
-        index_one, index_two = int(split[1]), int(split[2])
-        if len(data) > max(index_one, index_two):
+        index_one, index_two = int(split[1]) - 1, int(split[2]) - 1
+        if len(data) > max(index_one, index_two) and 0 <= min(index_one, index_two):
             data[index_one] = data[index_two]
         return last_instruction + 1
 
@@ -34,8 +38,8 @@ def run():
     seen = []
     data = get_data()
     instruction = 1
-    while data[instruction] not in seen and instruction < len(data) - 1:
-        seen.append(data[instruction])
+    while data[instruction - 1] not in seen and instruction < len(data) - 1:
+        seen.append(data[instruction - 1])
         instruction = get_next_instruction(instruction, data)
 
     print(seen)
