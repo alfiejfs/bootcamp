@@ -17,7 +17,7 @@ def get_inputs():
 
 def run():
     x, y, operation = get_inputs()
-    print(calc(operation, x, y))
+    print(calc(x, y, operation))
 
 if __name__ == "__main__":
     run()

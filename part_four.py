@@ -16,7 +16,7 @@ def get_next_instruction(last_instruction, data):
     if last_instruction == -1:
         return 0
     else:
-        split = data[last_instruction].rstrip().split(" ")
+        split = data[last_instruction + 1].rstrip().split(" ")
         if split[0] == "goto":
             if split[1] == "calc":
                 return int(calc(split[2], int(split[3]), int(split[4])))
@@ -37,7 +37,7 @@ def run():
     seen = []
     data = get_data()
     instruction = get_next_instruction(-1, data)
-    while data[instruction] not in seen:
+    while data[instruction] not in seen and instruction < len(data) - 1:
         seen.append(data[instruction])
         instruction = get_next_instruction(instruction, data)
 
